@@ -1,0 +1,47 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "globalDependencies": ["**/.env.*local"],
+  "globalEnv": [
+    "NODE_ENV",
+    "PORT",
+    "DATABASE_URL",
+    "TMDB_API_KEY",
+    "NEXT_PUBLIC_API_URL"
+  ],
+  "pipeline": {
+    "dev": {
+      "cache": false,
+      "persistent": true
+    },
+    "build": {
+      "dependsOn": ["^build", "^type-check"],
+      "outputs": ["dist/**", ".next/**", "build/**"],
+      "env": ["NODE_ENV"]
+    },
+    "start": {
+      "cache": false,
+      "dependsOn": ["build"]
+    },
+    "test": {
+      "dependsOn": ["build"],
+      "inputs": ["src/**/*.tsx", "src/**/*.ts", "test/**/*.ts"],
+      "outputs": ["coverage/**"]
+    },
+    "lint": {
+      "dependsOn": [],
+      "inputs": ["src/**/*.tsx", "src/**/*.ts"],
+      "outputs": []
+    },
+    "type-check": {
+      "dependsOn": [],
+      "inputs": ["src/**/*.tsx", "src/**/*.ts", "tsconfig.json"],
+      "outputs": []
+    },
+    "clean": {
+      "cache": false
+    },
+    "//#format": {
+      "cache": false
+    }
+  }
+}
